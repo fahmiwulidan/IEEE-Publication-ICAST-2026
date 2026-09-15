@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Not Found</title>
+    
+    <!-- Import Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           RESET & BASE
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Sembunyikan kursor default */
+        }
+
+        body {
+            background-color: #050505; /* True Dark minimalis */
+            color: #f3f3f3;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ==========================================
+           NOISE OVERLAY (Premium Texture)
+           ========================================== */
+        .noise::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* ==========================================
+           LAYOUT & TYPOGRAPHY
+           ========================================== */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* Wrapper untuk efek Masking Reveal */
+        .mask-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header 404 */
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 12vw;
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -0.05em;
+            color: #ffffff;
+            transform: translateY(110%);
+            opacity: 0;
+            /* Cubic-bezier untuk pergerakan eksklusif dan mulus */
+            animation: revealUp 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        /* Subteks */
+        p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #888888;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+            transform: translateY(110%);
+            opacity: 0;
+            animation: revealUp 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            animation-delay: 0.4s;
+        }
+
+        /* ==========================================
+           CLEAN MINIMALIST LINK
+           ========================================== */
+        .link-wrap {
+            transform: translateY(110%);
+            opacity: 0;
+            animation: revealUp 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            animation-delay: 0.6s;
+        }
+
+        .back-link {
+            position: relative;
+            display: inline-block;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: #ffffff;
+            padding-bottom: 5px;
+        }
+
+        /* Garis bawah animasi */
+        .back-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .back-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* ==========================================
+           KEYFRAMES
+           ========================================== */
+        @keyframes revealUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ==========================================
+           MINIMALIST CUSTOM CURSOR
+           ========================================== */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #ffffff;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+        }
+
+        /* Kursor saat hover link */
+        .cursor-outline.hover-state {
+            width: 60px;
+            height: 60px;
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Parallax subtle pada angka 404 */
+        .parallax-element {
+            transition: transform 0.1s linear;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Latar Belakang Noise/Grain -->
+    <div class="noise"></div>
+
+    <!-- Kursor Kustom Minimalis -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <main class="container">
+        <!-- Mask Wrap mengamankan teks agar terlihat "keluar dari lantai" -->
+        <div class="mask-wrap">
+            <h1 id="title" class="parallax-element">404</h1>
+        </div>
+        
+        <div class="mask-wrap">
+            <p>We couldn't find the page you were looking for.</p>
+        </div>
+
+        <div class="mask-wrap link-wrap">
+            <a href="/" class="back-link" id="home-link">Return Home</a>
+        </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. DUAL CUSTOM CURSOR (Lerp & Follow)
+        // ==========================================
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        const homeLink = document.getElementById('home-link');
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        // Posisi untuk outline (akan menggunakan delay/lerp)
+        let outlineX = mouseX;
+        let outlineY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Dot langsung mengikuti pergerakan mouse tanpa delay
+            cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        });
+
+        // Loop animasi lerp untuk Outline (memberikan efek smooth delay)
+        function animateOutline() {
+            // Lerp factor 0.15 mengatur seberapa 'lambat' outline mengikuti dot
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            
+            cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
+            requestAnimationFrame(animateOutline);
+        }
+        animateOutline();
+
+        // Efek kursor saat melakukan hover pada teks/link
+        homeLink.addEventListener('mouseenter', () => {
+            cursorOutline.classList.add('hover-state');
+            cursorDot.style.opacity = '0'; // Sembunyikan dot saat hover
+        });
+        
+        homeLink.addEventListener('mouseleave', () => {
+            cursorOutline.classList.remove('hover-state');
+            cursorDot.style.opacity = '1';
+        });
+
+        // ==========================================
+        // 2. VERY SUBTLE PARALLAX PADA TEKS 404
+        // ==========================================
+        const title = document.getElementById('title');
+
+        window.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 50; // Pembagi besar agar gerakan sangat sedikit
+            const y = (window.innerHeight / 2 - e.clientY) / 50;
+            
+            title.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            title.style.transform = 'translate(0, 0)';
+            title.style.transition = 'transform 0.5s ease-out';
+        });
+
+        window.addEventListener('mouseenter', () => {
+            title.style.transition = 'none'; // Matikan transisi saat kursor masuk agar parallax responsif
+        });
+    </script>
+</body>
+</html>
